@@ -1,21 +1,22 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchFromAPI } from 'frontend/lib/api';
 
 export default function HomePage() {
-  const [message, setMessage] = useState('');
+  const [ping, setPing] = useState<string>('');
 
   useEffect(() => {
-    fetchFromAPI('/')
-      .then((data) => setMessage(data))
-      .catch((err) => console.error(err));
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+    fetch(`${apiUrl}/ping`)
+      .then((res) => res.json())
+      .then((data) => setPing(data.message))
+      .catch((err) => setPing('Error: ' + err.message));
   }, []);
 
   return (
-    <main className="p-8">
-      <h1 className="text-2xl font-bold">Frontend Connected</h1>
-      <p>Backend says: {message || 'Loading...'}</p>
+    <main className="flex flex-col items-center justify-center min-h-screen">
+      <h1 className="text-2xl font-bold">Frontend is running ✅</h1>
+      <p className="mt-4">Backend says: {ping || 'Loading...'}</p>
     </main>
   );
 }
