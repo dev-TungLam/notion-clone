@@ -14,10 +14,10 @@ RUN npm install
 COPY . .
 
 # Set environment variable for app port
-ENV PORT=3000
+ENV PORT=4000
 
 # Expose port to host
-EXPOSE 3000
+EXPOSE 4000
 
 # Start the app
 CMD ["npm", "run", "start:dev"]
