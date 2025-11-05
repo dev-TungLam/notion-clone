@@ -1,99 +1,222 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Notion Clone
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A full-stack Notion-like application built with modern web technologies. This project implements collaborative document editing, page management, block-based content creation, and real-time collaboration features similar to Notion.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🏗️ Architecture
 
-## Description
+This is a monorepo containing two main packages:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Backend** (`packages/backend/`): NestJS API server with PostgreSQL database
+- **Frontend** (`packages/frontend/`): Next.js web application
 
-## Project setup
+### Tech Stack
 
-```bash
-$ npm install
+#### Backend
+- **Framework**: NestJS (Node.js)
+- **Database**: PostgreSQL with TypeORM
+- **Authentication**: JWT with Passport
+- **Validation**: class-validator and class-transformer
+- **Testing**: Jest
+- **Real-time**: WebSocket + Redis Pub/Sub
+- **Package Manager**: pnpm
+
+#### Frontend
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Package Manager**: npm
+
+## 📁 Project Structure
+
+```
+notion-clone/
+├── packages/
+│   ├── backend/
+│   │   ├── src/
+│   │   │   ├── config/
+│   │   │   ├── modules/
+│   │   │   └── main.ts
+│   │   ├── test/
+│   │   ├── package.json
+│   │   └── README.md
+│   └── frontend/
+│       ├── src/
+│       │   ├── app/
+│       │   ├── components/
+│       │   └── lib/
+│       ├── public/
+│       ├── package.json
+│       └── README.md
+├── docker-compose.yml
+├── package.json
+├── planning-doc.md
+└── README.md
 ```
 
-## Compile and run the project
+## 🚀 Getting Started
 
+### Prerequisites
+
+- Node.js (v20 or higher)
+- pnpm (for backend)
+- npm (for frontend)
+- PostgreSQL (v12 or higher)
+- Redis (optional, for real-time features)
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd notion-clone
+   ```
+
+2. **Install all dependencies**
+   ```bash
+   npm run install:all
+   ```
+
+3. **Set up the database**
+   ```bash
+   # Make sure PostgreSQL is running
+   # Create a database named 'notion_clone'
+   createdb notion_clone
+   ```
+
+4. **Configure environment variables**
+   ```bash
+   # Backend environment setup
+   cp packages/backend/.env.example packages/backend/.env
+   # Edit packages/backend/.env with your database credentials
+   ```
+
+5. **Run database migrations**
+   ```bash
+   cd packages/backend
+   npm run migration:run
+   ```
+
+### Development
+
+**Start both frontend and backend in development mode:**
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run dev
 ```
 
-## Run tests
+This will start:
+- Backend server on `http://localhost:4000` (default, configurable via PORT env var)
+- Frontend application on `http://localhost:3000`
+
+**Individual commands:**
 
 ```bash
-# unit tests
-$ npm run test
+# Start only backend
+npm run start:dev --workspace backend
 
-# e2e tests
-$ npm run test:e2e
+# Start only frontend
+npm run dev --workspace frontend
 
-# test coverage
-$ npm run test:cov
+# Build for production
+npm run build
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Testing
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+# Backend tests
+cd packages/backend
+npm run test
+
+# Backend e2e tests
+npm run test:e2e
+
+# Frontend tests (when implemented)
+cd packages/frontend
+npm run test
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 🔧 Development Scripts
 
-## Resources
+- `npm run dev` - Start both services in development mode
+- `npm run install:all` - Install dependencies for all workspaces
+- `npm run build` - Build both services for production
 
-Check out a few resources that may come in handy when working with NestJS:
+## 📚 Key Features (Planned)
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Phase 1: Foundation ✅
+- Database setup with TypeORM
+- Core entities (User, Workspace, Page, Block)
+- JWT authentication
+- Basic CRUD operations
 
-## Support
+### Phase 2: Core Features 🔄
+- User management and profiles
+- Workspace management with member roles
+- Page hierarchy and organization
+- Block system with multiple content types
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Phase 3: Advanced Features 📋
+- Database/table functionality
+- Real-time collaboration with WebSockets
+- File and media handling
+- Full-text search
 
-## Stay in touch
+### Phase 4: Production Ready 🚀
+- API documentation with Swagger
+- Rate limiting and security
+- Docker containerization
+- Monitoring and logging
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 🗄️ Database Schema
 
-## License
+The application uses PostgreSQL with the following main entities:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- **User**: Authentication and profile information
+- **Workspace**: Collaborative spaces owned by users
+- **WorkspaceMember**: User roles within workspaces
+- **Page**: Hierarchical document structure
+- **Block**: Content blocks within pages
+- **Database**: Custom tables with flexible schemas
+- **DatabaseItem**: Records within databases
+
+## 🔐 Authentication
+
+- JWT-based authentication with access and refresh tokens
+- Role-based access control (RBAC)
+- Password hashing with bcrypt
+- Email verification (planned)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Make your changes and add tests
+4. Run tests: `npm test`
+5. Commit your changes: `git commit -am 'Add some feature'`
+6. Push to the branch: `git push origin feature/your-feature`
+7. Submit a pull request
+
+## 📄 Documentation
+
+- [Planning Document](planning-doc.md) - Detailed project roadmap and architecture
+- [Backend README](packages/backend/README.md) - Backend-specific documentation
+- [Frontend README](packages/frontend/README.md) - Frontend-specific documentation
+
+## 🐳 Docker Deployment
+
+```bash
+# Build and run with Docker Compose
+docker-compose up -d
+```
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙋 Support
+
+For questions and support, please open an issue on GitHub.
+
+---
+
+**Note**: This project is currently in active development. Features and API may change before the first stable release.
