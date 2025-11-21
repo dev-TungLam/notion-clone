@@ -1,10 +1,10 @@
-# Use Node.js 18 (lightweight Alpine version)
-FROM node:18-alpine
+# Use Node.js 20 (lightweight Alpine version)
+FROM node:20-alpine
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy dependency files first
+# Copy dependency files first (for caching)
 COPY package*.json ./
 
 # Install dependencies
@@ -13,11 +13,11 @@ RUN npm install
 # Copy all source code
 COPY . .
 
-# Set environment variable for app port
-ENV PORT=4000
-
-# Expose port to host
+# Expose the app port
 EXPOSE 4000
 
-# Start the app
+# Set environment variable
+ENV PORT=4000
+
+# Start in development mode (use start:prod for production)
 CMD ["npm", "run", "start:dev"]
