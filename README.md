@@ -144,10 +144,10 @@ npm run test
 ## 📚 Key Features (Planned)
 
 ### Phase 1: Foundation ✅
-- Database setup with TypeORM
-- Core entities (User, Workspace, Page, Block)
-- JWT authentication
-- Basic CRUD operations
+- [x] Database setup with TypeORM
+- [x] Core entities (User, Workspace, Page, Block)
+- [ ] JWT authentication
+- [ ] Basic CRUD operations
 
 ### Phase 2: Core Features 🔄
 - User management and profiles
@@ -208,6 +208,13 @@ The application uses PostgreSQL with the following main entities:
 # Build and run with Docker Compose
 docker-compose up -d
 ```
+
+## 🔜 Next Steps
+
+The immediate focus is on **Authentication**:
+1.  Implement User registration and login.
+2.  Set up JWT strategy and guards.
+3.  Implement Workspace creation and member management.
 
 ## 📝 License
 
