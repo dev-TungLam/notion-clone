@@ -48,15 +48,15 @@ export class Share {
   @OneToMany(() => SharePermission, sp => sp.share)
   sharePermissions: SharePermission[]
 
-  @ManyToOne(() => Collection, collection => collection.collectionShares)
-  @JoinColumn({name: 'resource_id'})
+  @ManyToOne(() => Collection, collection => collection.collectionShares, { createForeignKeyConstraints: false })
+  @JoinColumn({ name: 'resource_id' })
   sharedCollection: Collection
 
-  @ManyToOne(() => Page, page => page.shares)
-  @JoinColumn({name: 'resource_id'})
+  @ManyToOne(() => Page, page => page.shares, { createForeignKeyConstraints: false })
+  @JoinColumn({ name: 'resource_id' })
   sharedPage: Page
 
-  @ManyToOne(() => Workspace, workspace => workspace.shares)
-  @JoinColumn({name: 'resource_id'})
+  @ManyToOne(() => Workspace, workspace => workspace.shares, { createForeignKeyConstraints: false })
+  @JoinColumn({ name: 'resource_id' })
   sharedWorkspace: Workspace
 }

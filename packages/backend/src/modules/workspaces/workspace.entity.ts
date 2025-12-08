@@ -5,7 +5,6 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  Timestamp,
 } from 'typeorm';
 import { User } from '../users/user.entity';
 import { WorkspaceMember } from '../workspace-members/workspace-member.entity';
@@ -34,7 +33,7 @@ export class Workspace {
   created_at: Date;
 
   @Column('timestamptz', {
-    name: 'created_at',
+    name: 'updated_at',
     nullable: false,
     default: () => 'now()',
   })

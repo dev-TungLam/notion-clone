@@ -29,7 +29,11 @@ export class WorkspaceMember {
   })
   user_id: string;
 
-  @Column({ name: 'role', type: 'string', nullable: false })
+  @Column('character varying', {
+    name: 'role',
+    nullable: false,
+    default: 'MEMBER',
+  })
   role: string;
 
   @Column('timestamptz', {
