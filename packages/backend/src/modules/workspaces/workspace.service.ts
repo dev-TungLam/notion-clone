@@ -15,9 +15,10 @@ export class WorkspaceService {
     private workspaceMemberRepository: Repository<WorkspaceMember>,
   ) {}
 
+  // Invariant: Workspace must have at least one owner upon creation
   async createWorkspace(user: User, workspaceName?: string) {
     const workspace = this.workspaceRepository.create({
-      workspace_name: workspaceName || `${user.user_name}'s Default Workspace`,
+      workspace_name: workspaceName || `${user.user_name}'s Default Workspace`, // Fallback to default name pattern
       owner_id: user.id,
       created_at: new Date(),
       updated_at: new Date(),

@@ -40,6 +40,7 @@ export class UserService {
     const registeredUser = await this.usersRepository.save(newUser);
 
     if (registeredUser) {
+      // Coupling: New User -> New Default Workspace (1:1 strict)
       await this.workspaceService.createWorkspace(registeredUser);
     } else {
       throw new BadRequestException('User registration failed');

@@ -1,3 +1,5 @@
+// Base36 fixed-length (6 chars) rank. Capacity ~2.1B
+// Fixed length prevents infinite string growth but requires O(N) rebalancing when gaps perform strict check
 export class LexoRank {
   static readonly LENGTH = 6;
 
@@ -25,6 +27,7 @@ export class LexoRank {
     const diff = nextVal - prevVal;
 
     if (diff <= 1) {
+      // Gap exhausted. Caller must trigger O(N) rebalance
       throw new Error('Rank gap exhausted. strict rebalance required.');
     }
 
@@ -34,6 +37,7 @@ export class LexoRank {
     return midVal.toString(36).padStart(this.LENGTH, '0');
   }
 
+  // O(N) rebalance strategy: Distribute items evenly across the entire rank space to maximize future insert gaps
   static getRebalancedRanks(count: number): string[] {
     if (count < 1) return [];
 
