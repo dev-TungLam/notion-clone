@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from '../users/user.entity';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { WorkspaceMember } from '../workspace-members/workspace-member.entity';
-import { LexoRank } from '../../utils/lexo-rank';
+import { WorkspaceRole } from '../../consts/common';
 
 @Injectable()
 export class WorkspaceService {
@@ -30,7 +30,7 @@ export class WorkspaceService {
       const member = this.workspaceMemberRepository.create({
         workspace_id: workspace.id,
         user_id: user.id,
-        role: 'OWNER',
+        role: WorkspaceRole.OWNER,
         // rank removed
         joined_at: new Date(),
       });

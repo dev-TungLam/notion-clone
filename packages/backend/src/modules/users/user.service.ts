@@ -8,6 +8,8 @@ import { WorkspaceService } from '../workspaces/workspace.service';
 
 @Injectable()
 export class UserService {
+  private static readonly SALT_ROUNDS = 10;
+
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
@@ -29,7 +31,7 @@ export class UserService {
     if (existingUser) {
       throw new BadRequestException('User already exists');
     }
-    const passwordHash = await bcrypt.hash(password, 10);
+    const passwordHash = await bcrypt.hash(password, UserService.SALT_ROUNDS);
 
     const newUser = this.usersRepository.create({
       email,
@@ -39,12 +41,13 @@ export class UserService {
 
     const registeredUser = await this.usersRepository.save(newUser);
 
-    if (registeredUser) {
-      // Coupling: New User -> New Default Workspace (1:1 strict)
-      await this.workspaceService.createWorkspace(registeredUser);
-    } else {
+    if (!registeredUser) {
       throw new BadRequestException('User registration failed');
     }
+
+    // Coupling: New User -> New Default Workspace (1:1 strict)
+    await this.workspaceService.createWorkspace(registeredUser);
+
     return registeredUser;
   }
 }

@@ -2,6 +2,7 @@
 // Fixed length prevents infinite string growth but requires O(N) rebalancing when gaps perform strict check
 export class LexoRank {
   static readonly LENGTH = 6;
+  static readonly BASE36 = 36;
 
   static min(): string {
     return '0'.padEnd(this.LENGTH, '0');
@@ -12,15 +13,15 @@ export class LexoRank {
   }
 
   static middle(prev: string, next: string): string {
-    const p = prev || this.min();
-    const n = next || this.max();
+    const prevRankOrDefault = prev || this.min();
+    const nextRankOrDefault = next || this.max();
 
-    const prevVal = parseInt(p, 36);
-    const nextVal = parseInt(n, 36);
+    const prevVal = parseInt(prevRankOrDefault, this.BASE36);
+    const nextVal = parseInt(nextRankOrDefault, this.BASE36);
 
     if (prevVal >= nextVal) {
       throw new Error(
-        `Invalid range: prev "${p}" (${prevVal}) > next "${n}" (${nextVal})`,
+        `Invalid range: prev "${prevRankOrDefault}" (${prevVal}) > next "${nextRankOrDefault}" (${nextVal})`,
       );
     }
 
@@ -34,15 +35,15 @@ export class LexoRank {
     // Deterministic midpoint
     const midVal = prevVal + Math.floor(diff / 2);
 
-    return midVal.toString(36).padStart(this.LENGTH, '0');
+    return midVal.toString(this.BASE36).padStart(this.LENGTH, '0');
   }
 
   // O(N) rebalance strategy: Distribute items evenly across the entire rank space to maximize future insert gaps
   static getRebalancedRanks(count: number): string[] {
     if (count < 1) return [];
 
-    const minVal = parseInt(this.min(), 36);
-    const maxVal = parseInt(this.max(), 36);
+    const minVal = parseInt(this.min(), this.BASE36);
+    const maxVal = parseInt(this.max(), this.BASE36);
     const totalSpace = maxVal - minVal;
 
     // Step size = totalSpace / (count + 1)
@@ -57,7 +58,7 @@ export class LexoRank {
 
     for (let i = 0; i < count; i++) {
       currentVal += step;
-      ranks.push(currentVal.toString(36).padStart(this.LENGTH, '0'));
+      ranks.push(currentVal.toString(this.BASE36).padStart(this.LENGTH, '0'));
     }
 
     return ranks;
