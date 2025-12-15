@@ -10,6 +10,4 @@ export class PageService {
     @InjectRepository(Page)
     private readonly pageRepository: Repository<Page>,
   ) {}
-
-  // Methods to be implemented: createPage, movePage, etc.
 }

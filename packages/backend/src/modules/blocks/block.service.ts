@@ -10,6 +10,4 @@ export class BlockService {
     @InjectRepository(Block)
     private readonly blockRepository: Repository<Block>,
   ) {}
-
-  // Methods to be implemented: createBlock, moveBlock, etc.
 }

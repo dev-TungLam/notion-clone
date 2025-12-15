@@ -1,10 +1,3 @@
-/**
- * LexoRank (Base36 fixed leng)
- *
- * Uses a fixed-length string (Base36) to represent rank.
- * Alphabet: "0123456789abcdefghijklmnopqrstuvwxyz"
- * Length: 6 characters (e.g., "000000" to "zzzzzz")
- */
 export class LexoRank {
   static readonly LENGTH = 6;
 
@@ -17,7 +10,6 @@ export class LexoRank {
   }
 
   static middle(prev: string, next: string): string {
-    // Default to min/max if inputs are empty
     const p = prev || this.min();
     const n = next || this.max();
 
@@ -42,31 +34,6 @@ export class LexoRank {
     return midVal.toString(36).padStart(this.LENGTH, '0');
   }
 
-  /**
-   * Generates a new set of evenly spaced ranks for the entire list.
-   * This is triggered when the gap between two existing ranks is too small (diff <= 1)
-   * to insert a new item.
-   *
-   * Rebalancing Strategy:
-   * 1. Define the full range of the rank space (min to max).
-   * 2. Calculate the total available space.
-   * 3. Divide the total space by (count + 1) to determine the step size.
-   * 4. Generate new ranks by incrementing from the minimum value by the step size.
-   *
-   * Example:
-   * Input: count = 3
-   * Rank Space: 000000 (0) to zzzzzz (2,176,782,335)
-   * Step Size: ~544,195,583
-   *
-   * Output:
-   * [
-   *   "08zi1h", // 0 + step
-   *   "0hzn2y", // prev + step
-   *   "0qzr4f"  // prev + step
-   * ]
-   *
-   * @param count The number of items to rebalance
-   */
   static getRebalancedRanks(count: number): string[] {
     if (count < 1) return [];
 

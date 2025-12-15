@@ -15,7 +15,6 @@ export class UserService {
   ) {}
 
   async findById(id: string): Promise<User | undefined> {
-    console.log('🚀 ~ UserService ~ findById ~ id:', id);
     return this.usersRepository.findOne({ where: { id } });
   }
 

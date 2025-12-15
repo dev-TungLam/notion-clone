@@ -48,7 +48,6 @@ export class WorkspaceController {
     @Query('cursor') cursor?: string,
     @Query('limit') limit?: number,
   ) {
-    //Use PagingCursor list
     const userId = req.user.userId;
 
     const pagingCursor = new PagingCursor(cursor, limit);
