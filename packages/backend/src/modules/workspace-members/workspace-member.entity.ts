@@ -25,7 +25,6 @@ export class WorkspaceMember {
   @Column('character varying', {
     name: 'user_id',
     nullable: false,
-    unique: true,
   })
   user_id: string;
 
