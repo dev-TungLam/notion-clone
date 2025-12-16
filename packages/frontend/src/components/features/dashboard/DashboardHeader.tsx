@@ -3,7 +3,7 @@ import { GlassIconButton } from "../../ui/GlassIconButton";
 
 export function DashboardHeader() {
   return (
-    <header className="flex items-start justify-between mb-8">
+    <header className="flex items-start justify-between mb-6">
       <div>
         <h1 className="text-4xl font-bold tracking-tight text-white mb-2 drop-shadow-sm">
           Dashboard

@@ -13,7 +13,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
 
       <Sidebar />
 
-      <main className="flex-1 flex flex-col h-full overflow-hidden relative p-6 md:p-10 z-10 w-full">
+      <main className="flex-1 flex flex-col overflow-hidden relative p-6 pt-3 md:p-10 md:pt-6 w-full">
         {children}
       </main>
     </div>

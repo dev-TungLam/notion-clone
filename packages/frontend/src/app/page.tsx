@@ -1,12 +1,14 @@
 "use client";
 
-import { DashboardHeader } from "@/components/features/dashboard/DashboardHeader";
-import { TeamCard } from "@/components/features/dashboard/TeamCard";
-import { BirthdayCard } from "@/components/features/dashboard/BirthdayCard";
-import { TemplateGalleryCard } from "@/components/features/dashboard/TemplateGalleryCard";
-import { InboxCard } from "@/components/features/dashboard/InboxCard";
-import { CreateWorkspaceCard } from "@/components/features/dashboard/CreateWorkspaceCard";
-import { ProjectCard } from "@/components/features/dashboard/ProjectCard";
+import {
+  DashboardHeader,
+  TeamCard,
+  BirthdayCard,
+  TemplateGalleryCard,
+  InboxCard,
+  CreateWorkspaceCard,
+  ProjectCard,
+} from "@/components/features/dashboard";
 
 export default function HomePage() {
   return (
