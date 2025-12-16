@@ -10,77 +10,58 @@
      Brand
   ========================== */
   --color-primary: #0d63a5;
+  --color-primary-700: #0a4f84;
   --color-primary-soft: rgba(13, 99, 165, 0.25);
 
   /* =========================
-     App Background (Solid)
+     Surfaces
   ========================== */
-  --color-background-app: rgba(9, 10, 14, 1);
+  --color-surface-1: rgb(18, 20, 28);
+  --color-surface-2: rgb(24, 26, 36);
+  --color-surface-3: rgb(32, 34, 48);
 
   /* =========================
-     Editor / Main Canvas
-     (Intentionally darker, non-glass)
+     App Base
   ========================== */
-  --color-canvas-bg: rgba(12, 13, 18, 1);
-  --color-canvas-surface: rgba(18, 19, 26, 1);
-  --color-canvas-border: rgba(255, 255, 255, 0.06);
+  --color-app-bg: rgba(8, 9, 13, 0.9);
 
   /* =========================
-     Sidebar — REAL TINTED GLASS
+     Liquid Glass Tuning
   ========================== */
-  --color-sidebar-base: rgba(14, 15, 20, 0.62);
+  --glass-tint: rgba(13, 99, 165, 0.35);
+  --glass-highlight: rgba(255, 255, 255, 0.12);
+  --glass-shadow: rgba(0, 0, 0, 0.35);
+  --glass-blur-strong: 15px;
+  --glass-blur-soft: 6px;
 
-  --image-sidebar-glass: linear-gradient(
-    145deg,
-    rgba(96, 165, 250, 0.14) 0%,
-    /* blue light */ rgba(168, 85, 247, 0.1) 35%,
-    /* purple light */ rgba(0, 0, 0, 0) 100%
+  --liquid-gradient: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.04) 35%,
+    rgba(255, 255, 255, 0.01) 60%
   );
 
-  --color-sidebar-edge: rgba(255, 255, 255, 0.14);
-  --color-sidebar-edge-soft: rgba(255, 255, 255, 0.05);
+  /* =========================
+     Borders / Edges
+  ========================== */
+  --color-liquid-border: rgba(255, 255, 255, 0.12);
+  --color-liquid-border-soft: rgba(255, 255, 255, 0.05);
 
   /* =========================
      Glass System (Cards, Panels)
   ========================== */
   --color-glass-surface: rgba(255, 255, 255, 0.04);
   --color-glass-surface-hover: rgba(255, 255, 255, 0.07);
-  --color-glass-surface-active: rgba(255, 255, 255, 0.1);
-
   --color-glass-border: rgba(255, 255, 255, 0.06);
-  --color-glass-border-strong: rgba(255, 255, 255, 0.1);
-
-  --image-glass-gradient: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(255, 255, 255, 0.02) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
 
   /* =========================
      Text
   ========================== */
   --color-text-primary: rgba(255, 255, 255, 0.92);
-  --color-text-secondary: rgba(255, 255, 255, 0.7);
   --color-text-muted: rgba(255, 255, 255, 0.45);
-  --color-text-disabled: rgba(255, 255, 255, 0.3);
 
   /* =========================
-     States
-  ========================== */
-  --color-hover-bg: rgba(255, 255, 255, 0.05);
-  --color-active-bg: rgba(255, 255, 255, 0.08);
-  --color-selected-bg: rgba(96, 165, 250, 0.18);
-
-  /* =========================
-     Accents
-  ========================== */
-  --color-accent-green: rgba(29, 185, 84, 0.9);
-  --color-accent-blue: rgba(96, 165, 250, 0.9);
-  --color-accent-purple: rgba(168, 85, 247, 0.9);
-
-  /* =========================
-     Shadows (Dark Mode)
+     Shadows
   ========================== */
   --shadow-glass-soft: 0 8px 30px rgba(0, 0, 0, 0.45);
   --shadow-glass-strong: 0 12px 40px rgba(0, 0, 0, 0.55);
@@ -111,30 +92,90 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Sidebar — Tinted Glass */
+/* Sidebar - Purple Gradient Glass */
 .sidebar {
-  background: var(--image-sidebar-glass), var(--color-sidebar-base);
+  background: linear-gradient(
+    180deg,
+    rgba(58, 26, 92, 0.4),
+    rgba(14, 10, 36, 0.4)
+  );
 
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-
-  border-right: 1px solid var(--color-sidebar-edge);
-
-  box-shadow:
-    inset 1px 0 0 var(--color-sidebar-edge-soft),
-    10px 0 35px rgba(0, 0, 0, 0.5);
-
+  backdrop-filter: blur(8px) saturate(130%);
+  -webkit-backdrop-filter: blur(8px) saturate(130%);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
   color: var(--color-text-primary);
 }
 
-.sidebar:hover {
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
+/* Card - Full Liquid Glass Effect */
+.card {
+  --border-width: 1px;
+
+  position: relative;
+  border-radius: 1rem;
+  padding: 21px;
+  display: grid;
+  gap: 1lh;
+
+  background: var(--liquid-gradient), rgba(32, 34, 48, 0.28);
+
+  backdrop-filter: blur(var(--glass-blur-strong)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(140%);
+
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 12px 40px var(--glass-shadow);
 }
 
-/* Glass Cards */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+
+  border: var(--border-width) solid transparent;
+
+  background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.25),
+      rgba(255, 255, 255, 0.05)
+    )
+    border-box;
+
+  mask:
+    linear-gradient(#000, #000) padding-box,
+    linear-gradient(#000, #000) border-box;
+  mask-composite: exclude;
+}
+
+/* Liquid Glass Cards */
+.liquid-card {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.02)
+    ),
+    rgba(255, 255, 255, 0.04);
+
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid var(--color-liquid-border-soft);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* Legacy glass-card (now uses liquid styling) */
 .glass-card {
-  background: var(--image-glass-gradient), var(--color-glass-surface);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.02)
+    ),
+    var(--color-glass-surface);
 
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -144,13 +185,13 @@
 }
 
 .glass-card:hover {
-  background: var(--image-glass-gradient), var(--color-glass-surface-hover);
-}
-
-/* Editor Canvas */
-.editor-canvas {
-  background: var(--color-canvas-bg);
-  color: var(--color-text-primary);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0.04)
+    ),
+    var(--color-glass-surface-hover);
 }
 
 .glass-btn {
@@ -302,11 +343,11 @@ body {
 }
 
 body {
-  background-color: var(--color-background-app);
+  background-color: var(--color-app-bg);
   background-image:
-    radial-gradient(at 0% 0%, rgba(96, 165, 250, 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(5, 150, 105, 0.05) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(92, 62, 148, 0.9) 0px, transparent 30%),
+    radial-gradient(at 100% 50%, rgba(65, 43, 107, 0.9) 0px, transparent 30%),
+    radial-gradient(at 100% 100%, rgba(53, 22, 83, 0.9) 0px, transparent 50%);
   background-attachment: fixed;
   color: var(--color-text-primary);
   font-family: var(--font-display);
