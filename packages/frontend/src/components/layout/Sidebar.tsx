@@ -1,20 +1,43 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { SidebarProvider, useSidebar } from "./sidebar/SidebarContext";
+import { SidebarItem } from "./sidebar/SidebarItem";
+import { SidebarGroup } from "./sidebar/SidebarGroup";
+import { SidebarTree, TreeNode } from "./sidebar/SidebarTree";
 
-export const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+const mockTreeData: TreeNode[] = [
+  { id: "prod-docs", label: "Product Docs", children: [] },
+  {
+    id: "sprint-notes",
+    label: "Sprint Notes",
+    children: [
+      { id: "daily-log", label: "Daily Log", icon: "description" },
+      { id: "retro", label: "Retrospective", icon: "description" },
+      { id: "planning", label: "Planning", icon: "description" },
+    ],
+  },
+  {
+    id: "design-sys",
+    label: "Design System",
+    children: [],
+  },
+];
+
+function SidebarContent() {
+  const { isCollapsed, setCollapsed } = useSidebar();
 
   return (
     <aside
       className={cn(
-        "w-[280px] bg-sidebar-bg border-r border-border-dark flex flex-col shrink-0 z-50 h-full transition-all duration-300 relative group/sidebar",
-        isCollapsed && "w-[60px]"
+        "sidebar flex flex-col shrink-0 z-50 h-full transition-all duration-300 relative group/sidebar",
+        isCollapsed ? "w-[60px]" : "w-[280px]"
       )}
+      aria-label="Main Navigation"
     >
+      {/* Tier 0: Workspace Context */}
       <div className="p-3">
-        <div className="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-colors group/workspace">
+        <div className="flex items-center justify-between p-2 hover:bg-[var(--color-glass-surface-hover)] rounded-lg cursor-pointer transition-colors group/workspace">
           <div className="flex items-center gap-3 overflow-hidden">
             <div className="w-6 h-6 shrink-0 bg-[#0d63a5] rounded-md flex items-center justify-center text-white text-xs font-bold shadow-lg shadow-blue-900/30 ring-1 ring-white/10">
               W
@@ -32,9 +55,10 @@ export const Sidebar = () => {
           </div>
           {!isCollapsed && (
             <button
-              onClick={() => setIsCollapsed(true)}
+              onClick={() => setCollapsed(true)}
               className="w-6 h-6 flex items-center justify-center rounded text-gray-500 hover:text-white hover:bg-white/10 transition-colors opacity-0 group-hover/sidebar:opacity-100"
               title="Collapse sidebar"
+              aria-label="Collapse sidebar"
             >
               <span className="material-symbols-outlined text-[18px]">
                 keyboard_double_arrow_left
@@ -44,22 +68,10 @@ export const Sidebar = () => {
         </div>
       </div>
 
-      <div className="px-3 pb-4 space-y-1 border-b border-white/5 mb-2">
-        <button className="w-full flex items-center gap-3 px-3 py-1.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-all group border border-transparent hover:border-white/5">
-          <span className="material-symbols-outlined text-[20px] group-hover:text-white transition-colors">
-            search
-          </span>
-          {!isCollapsed && (
-            <>
-              <span className="text-sm font-medium">Search</span>
-              <span className="ml-auto text-xs bg-white/10 px-1.5 py-0.5 rounded text-gray-500 border border-white/5 font-mono group-hover:text-gray-300 transition-colors">
-                ⌘K
-              </span>
-            </>
-          )}
-        </button>
-        <button className="w-full flex items-center gap-3 px-3 py-1.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-all group border border-transparent hover:border-white/5">
-          <span className="material-symbols-outlined text-[20px] group-hover:text-white transition-colors">
+      {/* Tier 1: Primary Action */}
+      <div className="px-3 pb-4">
+        <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-[var(--color-glass-surface)] hover:bg-[var(--color-glass-surface-hover)] border border-white/5 hover:border-white/10 text-white transition-all group focus:ring-2 focus:ring-blue-500 outline-none">
+          <span className="material-symbols-outlined text-[20px] text-blue-400 group-hover:text-blue-300">
             add_circle
           </span>
           {!isCollapsed && (
@@ -68,86 +80,45 @@ export const Sidebar = () => {
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-3 py-2 space-y-6 custom-scrollbar">
-        <div>
-          {!isCollapsed && (
-            <div className="px-3 mb-2 text-[11px] font-bold text-gray-600 uppercase tracking-wider">
-              Menu
-            </div>
-          )}
-          <nav className="space-y-0.5">
-            {[
-              { icon: "dashboard", label: "Overview" },
-              { icon: "receipt_long", label: "Transactions" },
-              { icon: "notifications_active", label: "Schedule Alerts" },
-              { icon: "savings", label: "Cashstack" },
-              { icon: "ssid_chart", label: "Finances" },
-              { icon: "description", label: "Contracts" },
-              { icon: "settings", label: "Settings" },
-            ].map((item) => (
-              <a
-                key={item.label}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-all group border border-transparent hover:border-white/5"
-                href="#"
-              >
-                <span className="material-symbols-outlined text-[#0d63a5] text-[24px] opacity-80 group-hover:opacity-100 transition-opacity">
-                  {item.icon}
-                </span>
-                {!isCollapsed && <span className="text-sm">{item.label}</span>}
-              </a>
-            ))}
-          </nav>
-        </div>
+      {/* Scrollable Area */}
+      <div className="flex-1 overflow-y-auto px-3 py-2 custom-scrollbar">
+        {/* Tier 2: Personal Navigation */}
+        <SidebarGroup>
+          <SidebarItem icon="home" label="Home" active />
+          <SidebarItem icon="schedule" label="Recent" />
+          <SidebarItem icon="star" label="Favorites" />
+          <SidebarItem icon="description" label="My Pages" />
+        </SidebarGroup>
 
-        {!isCollapsed && (
-          <div>
-            <div className="px-3 mb-1 flex items-center justify-between group cursor-pointer hover:bg-white/5 py-1 rounded">
-              <span className="text-[11px] font-bold text-gray-600 uppercase tracking-wider group-hover:text-gray-400 transition-colors">
-                Projects
-              </span>
-              <span className="material-symbols-outlined text-[16px] text-gray-600 hover:text-white transition-colors opacity-0 group-hover:opacity-100">
-                add
-              </span>
-            </div>
-            <nav className="space-y-0.5 mt-1">
-              {[
-                "Q4 Marketing Campaign",
-                "Website Redesign",
-                "Mobile App Launch",
-              ].map((project) => (
-                <div key={project} className="group relative">
-                  <a
-                    className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-all pl-2"
-                    href="#"
-                  >
-                    <span className="material-symbols-outlined text-[18px] text-gray-600 group-hover:text-gray-400 transition-colors">
-                      arrow_right
-                    </span>
-                    <span className="material-symbols-outlined text-[18px] text-gray-500">
-                      folder
-                    </span>
-                    <span className="text-sm truncate">{project}</span>
-                  </a>
-                </div>
-              ))}
-            </nav>
-          </div>
-        )}
+        {/* Tier 3: Pages Content Tree */}
+        <SidebarGroup
+          title="Pages" // 4. Update the "Workspace" SidebarGroup title to "Pages"
+          action={
+            <span className="material-symbols-outlined text-[14px] text-gray-600 hover:text-white transition-colors cursor-pointer">
+              add
+            </span>
+          }
+        >
+          <SidebarTree data={mockTreeData} />{" "}
+          {/* 3. Replace content with SidebarTree */}
+        </SidebarGroup>
+
+        {/* Tier 4: Utilities */}
+        <SidebarGroup title="Utilities">
+          <SidebarItem icon="grid_view" label="Templates" />
+          <SidebarItem icon="upload_file" label="Import" />
+          <SidebarItem icon="delete" label="Trash" />
+        </SidebarGroup>
       </div>
 
+      {/* Tier 5: Footer */}
       <div className="p-3 border-t border-white/5 bg-[#0a0a0a]">
-        {!isCollapsed && (
-          <a
-            className="flex items-center gap-3 px-3 py-2 mb-2 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-all group"
-            href="#"
-          >
-            <span className="material-symbols-outlined text-[20px] text-gray-500 group-hover:text-red-400 transition-colors">
-              delete
-            </span>
-            <span className="text-sm font-medium">Trash</span>
-          </a>
-        )}
-        <div className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 cursor-pointer transition-colors group border border-transparent hover:border-white/5">
+        <div
+          className="flex items-center justify-between p-2 rounded-lg hover:bg-[var(--color-glass-surface-hover)] cursor-pointer transition-colors group focus-visible:ring-2 focus-visible:ring-blue-500 outline-none"
+          role="button"
+          tabIndex={0}
+          aria-label="User profile and settings"
+        >
           <div className="flex items-center gap-3 min-w-0">
             <div className="relative shrink-0">
               <img
@@ -169,27 +140,34 @@ export const Sidebar = () => {
             )}
           </div>
           {!isCollapsed && (
-            <button
-              className="w-8 h-8 flex items-center justify-center rounded text-gray-500 hover:text-white hover:bg-white/10 transition-colors"
-              title="Log out"
-            >
-              <span className="material-symbols-outlined text-[20px]">
-                logout
-              </span>
-            </button>
+            <span className="material-symbols-outlined text-[20px] text-gray-500 hover:text-white transition-colors">
+              settings
+            </span>
           )}
         </div>
       </div>
+
+      {/* Expand Button (Mobile/Collapsed) */}
       {isCollapsed && (
-        <div className="absolute top-3 right-3">
+        <div className="absolute top-3 right-3 z-50">
           <button
-            onClick={() => setIsCollapsed(false)}
-            className="p-1 text-gray-500 hover:text-white"
+            onClick={() => setCollapsed(false)}
+            className="p-1 text-gray-500 hover:text-white bg-black/50 rounded focus:ring-2 focus:ring-blue-500 outline-none"
+            title="Expand sidebar"
+            aria-label="Expand sidebar"
           >
             <span className="material-symbols-outlined">menu_open</span>
           </button>
         </div>
       )}
     </aside>
+  );
+}
+
+export const Sidebar = () => {
+  return (
+    <SidebarProvider>
+      <SidebarContent />
+    </SidebarProvider>
   );
 };

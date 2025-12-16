@@ -1,24 +1,89 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Inter", "sans-serif";
+  /* =========================
+     Typography
+  ========================== */
+  --font-display: "Inter", sans-serif;
 
+  /* =========================
+     Brand
+  ========================== */
   --color-primary: #0d63a5;
-  --color-background-dark: #121a20;
-  --color-surface-dark: #161616;
-  --color-sidebar-bg: #0a0a0a;
-  --color-surface-hover: #21262d;
-  --color-border-dark: rgba(255, 255, 255, 0.08);
-  --color-text-main: #ffffff;
-  --color-text-muted: #9ca3af;
-  --color-glass-border: rgba(255, 255, 255, 0.08);
-  --color-glass-surface: rgba(255, 255, 255, 0.03);
+  --color-primary-soft: rgba(13, 99, 165, 0.25);
+
+  /* =========================
+     App Background (Solid)
+  ========================== */
+  --color-background-app: rgba(9, 10, 14, 1);
+
+  /* =========================
+     Editor / Main Canvas
+     (Intentionally darker, non-glass)
+  ========================== */
+  --color-canvas-bg: rgba(12, 13, 18, 1);
+  --color-canvas-surface: rgba(18, 19, 26, 1);
+  --color-canvas-border: rgba(255, 255, 255, 0.06);
+
+  /* =========================
+     Sidebar — REAL TINTED GLASS
+  ========================== */
+  --color-sidebar-base: rgba(14, 15, 20, 0.62);
+
+  --image-sidebar-glass: linear-gradient(
+    145deg,
+    rgba(96, 165, 250, 0.14) 0%,
+    /* blue light */ rgba(168, 85, 247, 0.1) 35%,
+    /* purple light */ rgba(0, 0, 0, 0) 100%
+  );
+
+  --color-sidebar-edge: rgba(255, 255, 255, 0.14);
+  --color-sidebar-edge-soft: rgba(255, 255, 255, 0.05);
+
+  /* =========================
+     Glass System (Cards, Panels)
+  ========================== */
+  --color-glass-surface: rgba(255, 255, 255, 0.04);
+  --color-glass-surface-hover: rgba(255, 255, 255, 0.07);
+  --color-glass-surface-active: rgba(255, 255, 255, 0.1);
+
+  --color-glass-border: rgba(255, 255, 255, 0.06);
+  --color-glass-border-strong: rgba(255, 255, 255, 0.1);
 
   --image-glass-gradient: linear-gradient(
     145deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.01) 100%
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.02) 50%,
+    rgba(255, 255, 255, 0) 100%
   );
+
+  /* =========================
+     Text
+  ========================== */
+  --color-text-primary: rgba(255, 255, 255, 0.92);
+  --color-text-secondary: rgba(255, 255, 255, 0.7);
+  --color-text-muted: rgba(255, 255, 255, 0.45);
+  --color-text-disabled: rgba(255, 255, 255, 0.3);
+
+  /* =========================
+     States
+  ========================== */
+  --color-hover-bg: rgba(255, 255, 255, 0.05);
+  --color-active-bg: rgba(255, 255, 255, 0.08);
+  --color-selected-bg: rgba(96, 165, 250, 0.18);
+
+  /* =========================
+     Accents
+  ========================== */
+  --color-accent-green: rgba(29, 185, 84, 0.9);
+  --color-accent-blue: rgba(96, 165, 250, 0.9);
+  --color-accent-purple: rgba(168, 85, 247, 0.9);
+
+  /* =========================
+     Shadows (Dark Mode)
+  ========================== */
+  --shadow-glass-soft: 0 8px 30px rgba(0, 0, 0, 0.45);
+  --shadow-glass-strong: 0 12px 40px rgba(0, 0, 0, 0.55);
 }
 
 /* Custom Scrollbar */
@@ -46,16 +111,46 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
+/* Sidebar — Tinted Glass */
+.sidebar {
+  background: var(--image-sidebar-glass), var(--color-sidebar-base);
+
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  border-right: 1px solid var(--color-sidebar-edge);
+
+  box-shadow:
+    inset 1px 0 0 var(--color-sidebar-edge-soft),
+    10px 0 35px rgba(0, 0, 0, 0.5);
+
+  color: var(--color-text-primary);
+}
+
+.sidebar:hover {
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+
+/* Glass Cards */
 .glass-card {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.06),
-    rgba(255, 255, 255, 0.02)
-  );
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  background: var(--image-glass-gradient), var(--color-glass-surface);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border: 1px solid var(--color-glass-border);
+  box-shadow: var(--shadow-glass-soft);
+}
+
+.glass-card:hover {
+  background: var(--image-glass-gradient), var(--color-glass-surface-hover);
+}
+
+/* Editor Canvas */
+.editor-canvas {
+  background: var(--color-canvas-bg);
+  color: var(--color-text-primary);
 }
 
 .glass-btn {
@@ -207,13 +302,13 @@ body {
 }
 
 body {
-  background-color: #050505;
+  background-color: var(--color-background-app);
   background-image:
-    radial-gradient(at 0% 0%, rgba(13, 99, 165, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 0%, rgba(96, 165, 250, 0.12) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.1) 0px, transparent 50%),
     radial-gradient(at 100% 100%, rgba(5, 150, 105, 0.05) 0px, transparent 50%);
   background-attachment: fixed;
-  color: var(--color-text-main);
+  color: var(--color-text-primary);
   font-family: var(--font-display);
   overflow: hidden;
 }
