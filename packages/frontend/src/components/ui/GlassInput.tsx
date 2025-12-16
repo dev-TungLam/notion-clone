@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 
 interface GlassInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -15,8 +15,8 @@ export function GlassInput({
   ...props
 }: GlassInputProps) {
   // Generate a unique ID if not provided, for accessibility
-  const inputId =
-    id || `glass-input-${Math.random().toString(36).substring(2, 9)}`;
+  const generatedId = useId();
+  const inputId = id || `glass-input-${generatedId}`;
 
   return (
     <div className="w-full">

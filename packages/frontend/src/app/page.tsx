@@ -9,10 +9,11 @@ import {
   CreateWorkspaceCard,
   ProjectCard,
 } from "@/components/features/dashboard";
+import { MainLayout } from "@/components/layout/MainLayout";
 
 export default function HomePage() {
   return (
-    <>
+    <MainLayout>
       <DashboardHeader />
 
       <div className="flex-1 overflow-y-auto pr-2 pb-10 scroll-smooth">
@@ -114,6 +115,6 @@ export default function HomePage() {
           </div>
         </section>
       </div>
-    </>
+    </MainLayout>
   );
 }

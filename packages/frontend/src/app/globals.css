@@ -177,8 +177,8 @@
     ),
     var(--color-glass-surface);
 
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 
   border: 1px solid var(--color-glass-border);
   box-shadow: var(--shadow-glass-soft);
@@ -345,7 +345,8 @@ body {
 body {
   background-color: var(--color-app-bg);
   background-image:
-    linear-gradient(125deg,rgb(8, 0, 33) 0%, rgb(6, 0, 56) 85%, rgb(48, 14, 111) 100%);
+    /* linear-gradient(125deg,rgb(6, 0, 23) 0%, rgb(2, 0, 27) 70%, rgb(35, 0, 99) 100%); */
+    linear-gradient(90deg, rgb(25, 0, 73) 0%, rgb(2, 0, 27) 50%, rgb(6, 0, 23) 100%);
   background-attachment: fixed;
   color: var(--color-text-primary);
   font-family: var(--font-display);
