@@ -54,9 +54,9 @@ export function SidebarItem({
         onMouseLeave={() => setIsHovered(false)}
         style={{ paddingLeft: level ? `${level * 12 + 12}px` : "12px" }}
         className={cn(
-          "flex items-center gap-2 py-1.5 pr-3 rounded-lg text-gray-400 hover:bg-[var(--color-glass-surface-hover)] hover:text-white transition-all group w-full border border-transparent hover:border-white/5 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+          "flex items-center gap-2 py-1.5 pr-3 rounded-lg text-gray-400 hover:bg-[var(--color-glass-surface-hover)] hover:text-white transition-all group w-full border border-transparent hover:border-white/5 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500 hover:shadow-[0_2px_12px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.05)]",
           active &&
-            "bg-[var(--color-glass-surface-hover)] text-white font-medium"
+            "bg-[var(--color-glass-surface-hover)] text-white font-medium shadow-[0_2px_12px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.08)]"
         )}
         role="menuitem"
         aria-label={label}
